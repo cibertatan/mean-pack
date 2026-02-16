@@ -13,6 +13,11 @@ export default function ProductSearch({ products, selectedProduct, onSelect }) {
     : products
 
   useEffect(() => {
+    if (selectedProduct) setQuery(selectedProduct.model)
+    else setQuery('')
+  }, [selectedProduct])
+
+  useEffect(() => {
     const handleClick = (e) => {
       if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
         setOpen(false)

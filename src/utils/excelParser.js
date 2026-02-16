@@ -1,12 +1,11 @@
 import * as XLSX from 'xlsx'
 
-const REQUIRED_COLUMNS = ['model', 'units_per_box', 'box_weight_kg', 'box_length_cm', 'box_width_cm', 'box_height_cm']
-const ALL_COLUMNS = [...REQUIRED_COLUMNS, 'series', 'unit_weight_kg']
+const REQUIRED_COLUMNS = ['model', 'units_per_box', 'box_weight_kg', 'box_length_in', 'box_width_in', 'box_height_in']
 
 /**
  * Lee un archivo Excel y retorna un array de productos validados.
  * @param {File} file
- * @returns {Promise<object[]>}
+ * @returns {Promise<object>}
  */
 export async function parseProductFile(file) {
   const buffer = await file.arrayBuffer()
@@ -28,7 +27,7 @@ export async function parseProductFile(file) {
   const errors = []
 
   rows.forEach((row, i) => {
-    const rowNum = i + 2 // header is row 1
+    const rowNum = i + 2
     const model = String(row.model ?? '').trim()
     if (!model) {
       errors.push(`Fila ${rowNum}: modelo vacío`)
@@ -37,11 +36,11 @@ export async function parseProductFile(file) {
 
     const units_per_box = Number(row.units_per_box)
     const box_weight_kg = Number(row.box_weight_kg)
-    const box_length_cm = Number(row.box_length_cm)
-    const box_width_cm = Number(row.box_width_cm)
-    const box_height_cm = Number(row.box_height_cm)
+    const box_length_in = Number(row.box_length_in)
+    const box_width_in = Number(row.box_width_in)
+    const box_height_in = Number(row.box_height_in)
 
-    if ([units_per_box, box_weight_kg, box_length_cm, box_width_cm, box_height_cm].some(v => !Number.isFinite(v) || v <= 0)) {
+    if ([units_per_box, box_weight_kg, box_length_in, box_width_in, box_height_in].some(v => !Number.isFinite(v) || v <= 0)) {
       errors.push(`Fila ${rowNum} (${model}): valores numéricos inválidos`)
       return
     }
@@ -51,9 +50,9 @@ export async function parseProductFile(file) {
       series: row.series ? String(row.series).trim() : null,
       units_per_box: Math.floor(units_per_box),
       box_weight_kg,
-      box_length_cm,
-      box_width_cm,
-      box_height_cm,
+      box_length_in,
+      box_width_in,
+      box_height_in,
       unit_weight_kg: row.unit_weight_kg != null ? Number(row.unit_weight_kg) : null,
     })
   })
