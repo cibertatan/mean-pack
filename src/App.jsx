@@ -134,14 +134,13 @@ export default function App() {
 
         {products.length > 0 && (
           <>
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center bg-green-100 text-green-700 text-xs font-medium px-2.5 py-1 rounded-full">
-                {products.length}
-              </span>
-              <p className="text-sm text-gray-500">{t('productsLoaded', products.length)}</p>
-            </div>
-
             <div ref={formRef} className="bg-white border border-gray-200 rounded-xl p-4 sm:p-5 space-y-4 shadow-sm">
+              <div className="flex items-center justify-between pb-1">
+                <p className="text-sm font-medium text-gray-700">{t('selectProduct')}</p>
+                <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-md">
+                  {t('productsLoaded', products.length)}
+                </span>
+              </div>
               <ProductSearch
                 products={products}
                 selectedProduct={selectedProduct}
