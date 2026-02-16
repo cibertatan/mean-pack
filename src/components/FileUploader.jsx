@@ -78,7 +78,7 @@ export default function FileUploader({ onFileLoaded, fileName }) {
 
       <p className="text-xs text-gray-400">
         ¿No tienes archivo?{' '}
-        <a href="/mean-pack-template.xlsx" download className="text-blue-500 hover:underline">
+        <a href={import.meta.env.BASE_URL + 'mean-pack-template.xlsx'} download className="text-blue-500 hover:underline">
           Descarga el template
         </a>
       </p>
