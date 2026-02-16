@@ -121,7 +121,7 @@ export default function App() {
           </button>
         </header>
 
-        <FileUploader onFileLoaded={handleFileLoaded} onClear={handleClearFile} fileName={fileName} />
+        <FileUploader onFileLoaded={handleFileLoaded} onClear={handleClearFile} fileName={fileName} productCount={products.length} />
 
         {warnings.length > 0 && (
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-700">
@@ -135,12 +135,6 @@ export default function App() {
         {products.length > 0 && (
           <>
             <div ref={formRef} className="bg-white border border-gray-200 rounded-xl p-4 sm:p-5 space-y-4 shadow-sm">
-              <div className="flex items-center justify-between pb-1">
-                <p className="text-sm font-medium text-gray-700">{t('selectProduct')}</p>
-                <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-md">
-                  {t('productsLoaded', products.length)}
-                </span>
-              </div>
               <ProductSearch
                 products={products}
                 selectedProduct={selectedProduct}

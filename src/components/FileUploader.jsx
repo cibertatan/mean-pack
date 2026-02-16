@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { useLang } from '../i18n'
 
-export default function FileUploader({ onFileLoaded, onClear, fileName }) {
+export default function FileUploader({ onFileLoaded, onClear, fileName, productCount }) {
   const { t } = useLang()
   const [dragOver, setDragOver] = useState(false)
   const [error, setError] = useState(null)
@@ -78,6 +78,9 @@ export default function FileUploader({ onFileLoaded, onClear, fileName }) {
                 </svg>
               </button>
             </div>
+            {productCount > 0 && (
+              <p className="text-sm text-green-600 font-medium mb-1">{t('productsLoaded', productCount)}</p>
+            )}
             <p className="text-xs text-gray-400">{t('fileReplace')}</p>
           </div>
         ) : (
