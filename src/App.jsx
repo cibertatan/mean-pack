@@ -82,9 +82,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-2xl mx-auto px-4 py-10 space-y-6">
+      <div className="max-w-2xl mx-auto px-3 sm:px-4 py-6 sm:py-10 space-y-4 sm:space-y-6">
         <header>
-          <h1 className="text-2xl font-bold text-gray-800">Mean Pack</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-800">Mean Pack</h1>
           <p className="text-sm text-gray-500">Calculadora de cajas Mean Well</p>
         </header>
 
@@ -103,7 +103,7 @@ export default function App() {
           <>
             <p className="text-sm text-gray-500">{products.length} productos cargados</p>
 
-            <div ref={formRef} className="bg-white border border-gray-200 rounded-lg p-4 space-y-4">
+            <div ref={formRef} className="bg-white border border-gray-200 rounded-lg p-3 sm:p-4 space-y-3 sm:space-y-4">
               <ProductSearch
                 products={products}
                 selectedProduct={selectedProduct}

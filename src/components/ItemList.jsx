@@ -10,12 +10,12 @@ export default function ItemList({ items, onRemove, onEdit, editingId }) {
         return (
           <div
             key={item.id}
-            className={`flex items-center justify-between bg-white border rounded-lg px-4 py-3 ${
+            className={`flex items-center justify-between bg-white border rounded-lg px-3 sm:px-4 py-2.5 sm:py-3 ${
               isEditing ? 'border-blue-400 bg-blue-50' : 'border-gray-200'
             }`}
           >
             <div className="flex-1 min-w-0">
-              <p className="font-medium text-gray-800 truncate">
+              <p className="font-medium text-gray-800 truncate text-sm sm:text-base">
                 {item.product.model}
                 {item.product.series && (
                   <span className="text-gray-400 font-normal ml-1">({item.product.series})</span>

@@ -43,10 +43,11 @@ export default function ResultsPanel({ items }) {
 
   return (
     <div className="space-y-3">
-      <div ref={panelRef} className="bg-white border border-gray-200 rounded-lg p-5 space-y-4">
-        <h3 className="font-semibold text-lg text-gray-800">Resumen del pedido</h3>
+      <div ref={panelRef} className="bg-white border border-gray-200 rounded-lg p-4 sm:p-5 space-y-3 sm:space-y-4">
+        <h3 className="font-semibold text-base sm:text-lg text-gray-800">Resumen del pedido</h3>
 
-        <table className="w-full text-sm">
+        <div className="overflow-x-auto -mx-4 px-4 sm:-mx-5 sm:px-5">
+        <table className="w-full text-sm min-w-[420px]">
           <thead>
             <tr className="text-left text-gray-500 border-b border-gray-100">
               <th className="pb-2 font-medium">Modelo</th>
@@ -84,6 +85,7 @@ export default function ResultsPanel({ items }) {
             </tr>
           </tfoot>
         </table>
+        </div>
 
         <div className="text-xs text-gray-400 space-y-0.5 pt-1">
           {results.map(({ id, product, result }) => (
