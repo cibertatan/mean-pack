@@ -5,11 +5,22 @@ import QuantityInput from './components/QuantityInput'
 import ResultsPanel from './components/ResultsPanel'
 import { parseProductFile } from './utils/excelParser'
 
+function loadStored(key, fallback) {
+  try {
+    const raw = localStorage.getItem(key)
+    return raw ? JSON.parse(raw) : fallback
+  } catch { return fallback }
+}
+
+function store(key, value) {
+  localStorage.setItem(key, JSON.stringify(value))
+}
+
 export default function App() {
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState(() => loadStored('mp_products', []))
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [quantity, setQuantity] = useState(0)
-  const [fileName, setFileName] = useState(null)
+  const [fileName, setFileName] = useState(() => loadStored('mp_fileName', null))
   const [warnings, setWarnings] = useState([])
 
   const handleFileLoaded = async (file) => {
@@ -19,6 +30,8 @@ export default function App() {
     setFileName(file.name)
     setSelectedProduct(null)
     setQuantity(0)
+    store('mp_products', parsed)
+    store('mp_fileName', file.name)
   }
 
   return (
