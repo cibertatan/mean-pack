@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
+import { useLang } from '../i18n'
 
 export default function ProductSearch({ products, selectedProduct, onSelect }) {
+  const { t } = useLang()
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const wrapperRef = useRef(null)
@@ -41,13 +43,13 @@ export default function ProductSearch({ products, selectedProduct, onSelect }) {
 
   return (
     <div ref={wrapperRef} className="relative">
-      <label className="block text-sm font-medium text-gray-700 mb-1">Modelo</label>
+      <label className="block text-sm font-medium text-gray-700 mb-1">{t('modelLabel')}</label>
       <input
         type="text"
         value={query}
         onChange={handleInputChange}
         onFocus={() => setOpen(true)}
-        placeholder="Buscar modelo..."
+        placeholder={t('modelPlaceholder')}
         className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       />
       {open && filtered.length > 0 && (
@@ -60,14 +62,14 @@ export default function ProductSearch({ products, selectedProduct, onSelect }) {
             >
               <span className="font-medium">{p.model}</span>
               {p.series && <span className="text-gray-400 ml-2">({p.series})</span>}
-              <span className="text-gray-400 ml-2">— {p.units_per_box} uds/caja</span>
+              <span className="text-gray-400 ml-2">— {p.units_per_box} {t('unitsPerBox')}</span>
             </li>
           ))}
         </ul>
       )}
       {open && query.trim() && filtered.length === 0 && (
         <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-3 text-sm text-gray-500">
-          No se encontró "{query}"
+          {t('modelNotFound', query)}
         </div>
       )}
     </div>

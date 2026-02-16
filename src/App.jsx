@@ -5,6 +5,7 @@ import QuantityInput from './components/QuantityInput'
 import ItemList from './components/ItemList'
 import ResultsPanel from './components/ResultsPanel'
 import { parseProductFile } from './utils/excelParser'
+import { useLang } from './i18n'
 
 function loadStored(key, fallback) {
   try {
@@ -20,6 +21,7 @@ function store(key, value) {
 let nextId = Date.now()
 
 export default function App() {
+  const { lang, toggleLang, t } = useLang()
   const [products, setProducts] = useState(() => loadStored('mp_products', []))
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [quantity, setQuantity] = useState(0)
@@ -83,16 +85,26 @@ export default function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-2xl mx-auto px-3 sm:px-4 py-6 sm:py-10 space-y-4 sm:space-y-6">
-        <header>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-800">Mean Pack</h1>
-          <p className="text-sm text-gray-500">Calculadora de cajas Mean Well</p>
+        <header className="flex items-start justify-between">
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-800">{t('appTitle')}</h1>
+            <p className="text-sm text-gray-500">{t('appSubtitle')}</p>
+          </div>
+          <button
+            onClick={toggleLang}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-gray-200 bg-white text-xs font-medium text-gray-600 hover:bg-gray-50 transition-colors shrink-0"
+          >
+            <span className={lang === 'es' ? 'font-bold text-gray-800' : ''}>ES</span>
+            <span className="text-gray-300">/</span>
+            <span className={lang === 'en' ? 'font-bold text-gray-800' : ''}>EN</span>
+          </button>
         </header>
 
         <FileUploader onFileLoaded={handleFileLoaded} fileName={fileName} />
 
         {warnings.length > 0 && (
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-sm text-yellow-700">
-            <p className="font-medium mb-1">Advertencias al importar:</p>
+            <p className="font-medium mb-1">{t('warnings')}</p>
             <ul className="list-disc list-inside space-y-0.5">
               {warnings.map((w, i) => <li key={i}>{w}</li>)}
             </ul>
@@ -101,7 +113,7 @@ export default function App() {
 
         {products.length > 0 && (
           <>
-            <p className="text-sm text-gray-500">{products.length} productos cargados</p>
+            <p className="text-sm text-gray-500">{t('productsLoaded', products.length)}</p>
 
             <div ref={formRef} className="bg-white border border-gray-200 rounded-lg p-3 sm:p-4 space-y-3 sm:space-y-4">
               <ProductSearch
@@ -122,14 +134,14 @@ export default function App() {
                   disabled={!selectedProduct || quantity <= 0}
                   className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                 >
-                  {editingId ? 'Guardar cambios' : 'Agregar item'}
+                  {editingId ? t('saveChanges') : t('addItem')}
                 </button>
                 {editingId && (
                   <button
                     onClick={handleCancelEdit}
                     className="px-4 py-2 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors"
                   >
-                    Cancelar
+                    {t('cancel')}
                   </button>
                 )}
               </div>

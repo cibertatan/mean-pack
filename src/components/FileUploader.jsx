@@ -1,6 +1,8 @@
 import { useCallback, useState } from 'react'
+import { useLang } from '../i18n'
 
 export default function FileUploader({ onFileLoaded, fileName }) {
+  const { t } = useLang()
   const [dragOver, setDragOver] = useState(false)
   const [error, setError] = useState(null)
 
@@ -9,7 +11,7 @@ export default function FileUploader({ onFileLoaded, fileName }) {
     if (!file) return
     const ext = file.name.split('.').pop().toLowerCase()
     if (!['xlsx', 'xls'].includes(ext)) {
-      setError('Solo se aceptan archivos .xlsx o .xls')
+      setError(t('fileError'))
       return
     }
     try {
@@ -62,12 +64,12 @@ export default function FileUploader({ onFileLoaded, fileName }) {
         {fileName ? (
           <div>
             <p className="text-green-700 font-medium">{fileName}</p>
-            <p className="text-sm text-gray-500 mt-1">Click o arrastra otro archivo para reemplazar</p>
+            <p className="text-sm text-gray-500 mt-1">{t('fileReplace')}</p>
           </div>
         ) : (
           <div>
-            <p className="text-gray-600 font-medium">Arrastra tu archivo Excel aquí</p>
-            <p className="text-sm text-gray-400 mt-1">o haz click para seleccionar</p>
+            <p className="text-gray-600 font-medium">{t('fileDrag')}</p>
+            <p className="text-sm text-gray-400 mt-1">{t('fileClick')}</p>
           </div>
         )}
       </div>
@@ -77,9 +79,9 @@ export default function FileUploader({ onFileLoaded, fileName }) {
       )}
 
       <p className="text-xs text-gray-400">
-        ¿No tienes archivo?{' '}
+        {t('fileNoFile')}{' '}
         <a href={import.meta.env.BASE_URL + 'mean-pack-template.xlsx'} download className="text-blue-500 hover:underline">
-          Descarga el template
+          {t('fileDownload')}
         </a>
       </p>
     </div>
