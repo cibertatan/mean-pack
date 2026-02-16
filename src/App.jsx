@@ -82,6 +82,18 @@ export default function App() {
     setQuantity(0)
   }
 
+  const handleClearFile = () => {
+    setProducts([])
+    setFileName(null)
+    setSelectedProduct(null)
+    setQuantity(0)
+    setWarnings([])
+    setItems([])
+    setEditingId(null)
+    localStorage.removeItem('mp_products')
+    localStorage.removeItem('mp_fileName')
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       <div className="max-w-2xl mx-auto px-3 sm:px-4 py-6 sm:py-10 space-y-5 sm:space-y-6">
@@ -109,7 +121,7 @@ export default function App() {
           </button>
         </header>
 
-        <FileUploader onFileLoaded={handleFileLoaded} fileName={fileName} />
+        <FileUploader onFileLoaded={handleFileLoaded} onClear={handleClearFile} fileName={fileName} />
 
         {warnings.length > 0 && (
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-700">

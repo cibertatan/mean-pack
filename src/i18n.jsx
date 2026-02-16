@@ -15,6 +15,7 @@ const translations = {
     fileDrag: 'Arrastra tu archivo Excel aquí',
     fileClick: 'o haz click para seleccionar',
     fileError: 'Solo se aceptan archivos .xlsx o .xls',
+    fileClear: 'Quitar archivo',
     fileNoFile: '¿No tienes archivo?',
     fileDownload: 'Descarga el template',
 
@@ -70,6 +71,7 @@ const translations = {
     fileDrag: 'Drag your Excel file here',
     fileClick: 'or click to select',
     fileError: 'Only .xlsx or .xls files are accepted',
+    fileClear: 'Remove file',
     fileNoFile: "Don't have a file?",
     fileDownload: 'Download template',
 
