@@ -52,7 +52,9 @@ const translations = {
     kgPerBox: 'kg/caja',
     partialEstimated: '(peso parcial estimado)',
     downloadImage: 'Descargar imagen',
+    downloadPdf: 'Descargar PDF',
     downloadError: 'No se pudo generar la imagen.',
+    downloadPdfError: 'No se pudo generar el PDF.',
   },
   en: {
     appTitle: 'Mean Pack',
@@ -105,7 +107,9 @@ const translations = {
     kgPerBox: 'kg/box',
     partialEstimated: '(partial weight estimated)',
     downloadImage: 'Download image',
+    downloadPdf: 'Download PDF',
     downloadError: 'Could not generate the image.',
+    downloadPdfError: 'Could not generate the PDF.',
   },
 }
 
