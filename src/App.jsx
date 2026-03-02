@@ -4,6 +4,7 @@ import ProductSearch from './components/ProductSearch'
 import QuantityInput from './components/QuantityInput'
 import ItemList from './components/ItemList'
 import ResultsPanel from './components/ResultsPanel'
+import PriceCalculator from './components/PriceCalculator'
 import { parseProductFile } from './utils/excelParser'
 import { useLang } from './i18n'
 
@@ -22,6 +23,7 @@ let nextId = Date.now()
 
 export default function App() {
   const { lang, toggleLang, t } = useLang()
+  const [activeTab, setActiveTab] = useState('box')
   const [products, setProducts] = useState(() => loadStored('mp_products', []))
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [quantity, setQuantity] = useState(0)
@@ -121,64 +123,104 @@ export default function App() {
           </button>
         </header>
 
-        <FileUploader onFileLoaded={handleFileLoaded} onClear={handleClearFile} fileName={fileName} productCount={products.length} />
+        {/* Tab switcher */}
+        <div className="flex bg-white border border-gray-200 rounded-xl p-1 shadow-sm gap-1">
+          <button
+            onClick={() => setActiveTab('box')}
+            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-sm font-medium transition-all ${
+              activeTab === 'box'
+                ? 'bg-blue-600 text-white shadow-sm'
+                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+              <path d="M3.196 12.87l-.825.483a.75.75 0 000 1.294l7.004 4.086a1.5 1.5 0 001.25 0l7.004-4.086a.75.75 0 000-1.294l-.825-.484-5.554 3.24a2.25 2.25 0 01-1.5.001L3.196 12.87z" />
+              <path d="M3.196 8.87l-.825.483a.75.75 0 000 1.294l7.004 4.086a1.5 1.5 0 001.25 0l7.004-4.086a.75.75 0 000-1.294l-.825-.484-5.554 3.24a2.25 2.25 0 01-1.5.001L3.196 8.87z" />
+              <path d="M10.625 2.247a1.125 1.125 0 00-1.25 0L2.371 6.333a.75.75 0 000 1.294l7.004 4.086a1.5 1.5 0 001.25 0l7.004-4.086a.75.75 0 000-1.294l-7.004-4.086z" />
+            </svg>
+            Box Calculator
+          </button>
+          <button
+            onClick={() => setActiveTab('price')}
+            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg text-sm font-medium transition-all ${
+              activeTab === 'price'
+                ? 'bg-blue-600 text-white shadow-sm'
+                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.798 7.45c.512-.67 1.135-.95 1.702-.95s1.19.28 1.702.95a.75.75 0 001.192-.91C12.637 5.55 11.596 5 10.5 5c-1.096 0-2.137.55-2.894 1.54A5.205 5.205 0 006.94 8H6.25a.75.75 0 000 1.5h.42a6.442 6.442 0 000 1h-.42a.75.75 0 000 1.5h.69c.163.48.377.93.646 1.34.757.99 1.798 1.66 2.914 1.66 1.096 0 2.137-.55 2.894-1.54a.75.75 0 00-1.192-.91c-.512.67-1.135.95-1.702.95s-1.19-.28-1.702-.95a3.505 3.505 0 01-.39-.55h1.342a.75.75 0 000-1.5H8.026a4.942 4.942 0 010-1h1.724a.75.75 0 000-1.5H8.408c.1-.18.214-.37.39-.55z" clipRule="evenodd" />
+            </svg>
+            Price Calculator
+          </button>
+        </div>
 
-        {warnings.length > 0 && (
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-700">
-            <p className="font-medium mb-1">{t('warnings')}</p>
-            <ul className="list-disc list-inside space-y-0.5">
-              {warnings.map((w, i) => <li key={i}>{w}</li>)}
-            </ul>
-          </div>
-        )}
-
-        {products.length > 0 && (
+        {/* Box Calculator tab */}
+        {activeTab === 'box' && (
           <>
-            <div ref={formRef} className="bg-white border border-gray-200 rounded-xl p-4 sm:p-5 space-y-4 shadow-sm">
-              <ProductSearch
-                products={products}
-                selectedProduct={selectedProduct}
-                onSelect={setSelectedProduct}
-              />
+            <FileUploader onFileLoaded={handleFileLoaded} onClear={handleClearFile} fileName={fileName} productCount={products.length} />
 
-              <QuantityInput
-                quantity={quantity}
-                onChange={setQuantity}
-                disabled={!selectedProduct}
-              />
-
-              <div className="flex gap-2">
-                <button
-                  onClick={handleAdd}
-                  disabled={!selectedProduct || quantity <= 0}
-                  className="flex-1 bg-blue-600 text-white py-2.5 px-4 rounded-xl font-medium hover:bg-blue-700 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed transition-all shadow-sm disabled:shadow-none"
-                >
-                  {editingId ? t('saveChanges') : t('addItem')}
-                </button>
-                {editingId && (
-                  <button
-                    onClick={handleCancelEdit}
-                    className="px-4 py-2.5 border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 transition-all"
-                  >
-                    {t('cancel')}
-                  </button>
-                )}
+            {warnings.length > 0 && (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 text-sm text-amber-700">
+                <p className="font-medium mb-1">{t('warnings')}</p>
+                <ul className="list-disc list-inside space-y-0.5">
+                  {warnings.map((w, i) => <li key={i}>{w}</li>)}
+                </ul>
               </div>
-            </div>
+            )}
 
-            {items.length > 0 && (
+            {products.length > 0 && (
               <>
-                <ItemList
-                  items={items}
-                  onRemove={handleRemove}
-                  onEdit={handleEdit}
-                  editingId={editingId}
-                />
-                <ResultsPanel items={items} />
+                <div ref={formRef} className="bg-white border border-gray-200 rounded-xl p-4 sm:p-5 space-y-4 shadow-sm">
+                  <ProductSearch
+                    products={products}
+                    selectedProduct={selectedProduct}
+                    onSelect={setSelectedProduct}
+                  />
+
+                  <QuantityInput
+                    quantity={quantity}
+                    onChange={setQuantity}
+                    disabled={!selectedProduct}
+                  />
+
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleAdd}
+                      disabled={!selectedProduct || quantity <= 0}
+                      className="flex-1 bg-blue-600 text-white py-2.5 px-4 rounded-xl font-medium hover:bg-blue-700 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed transition-all shadow-sm disabled:shadow-none"
+                    >
+                      {editingId ? t('saveChanges') : t('addItem')}
+                    </button>
+                    {editingId && (
+                      <button
+                        onClick={handleCancelEdit}
+                        className="px-4 py-2.5 border border-gray-200 rounded-xl text-gray-600 hover:bg-gray-50 transition-all"
+                      >
+                        {t('cancel')}
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {items.length > 0 && (
+                  <>
+                    <ItemList
+                      items={items}
+                      onRemove={handleRemove}
+                      onEdit={handleEdit}
+                      editingId={editingId}
+                    />
+                    <ResultsPanel items={items} />
+                  </>
+                )}
               </>
             )}
           </>
         )}
+
+        {/* Price Calculator tab */}
+        {activeTab === 'price' && <PriceCalculator />}
       </div>
     </div>
   )
