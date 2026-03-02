@@ -118,6 +118,7 @@ export default function PriceCalculator() {
 
   const handleDownloadPdf = async () => {
     if (!res) return
+    try {
     const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' })
     const pageW = pdf.internal.pageSize.getWidth()
     const pageH = pdf.internal.pageSize.getHeight()
@@ -231,7 +232,7 @@ export default function PriceCalculator() {
     priceRows.forEach(({ label, value, big }) => {
       if (big) {
         pdf.setFillColor(239, 246, 255)
-        pdf.roundedRect(12, y - 6, pageW - 24, 11, 2, 2, 'F')
+        pdf.rect(12, y - 6, pageW - 24, 11, 'F')
         pdf.setFontSize(12)
         pdf.setFont('helvetica', 'bold')
         pdf.setTextColor(30, 64, 175)
@@ -268,6 +269,10 @@ export default function PriceCalculator() {
 
     const modelSlug = (form.model || 'product').replace(/\s+/g, '-').toLowerCase()
     pdf.save(`quotation-${modelSlug}-${new Date().toISOString().slice(0, 10)}.pdf`)
+    } catch (err) {
+      console.error('PDF error:', err)
+      alert('Could not generate PDF: ' + (err?.message || err))
+    }
   }
 
   return (
