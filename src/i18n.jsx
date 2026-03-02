@@ -57,6 +57,40 @@ const translations = {
     downloadPdf: 'Descargar PDF',
     downloadError: 'No se pudo generar la imagen.',
     downloadPdfError: 'No se pudo generar el PDF.',
+
+    // Tabs
+    tabBox: 'Calculadora de Cajas',
+    tabPrice: 'Calculadora de Precios',
+
+    // PriceCalculator – secciones
+    pcProductInfo: 'Información del Producto',
+    pcPricing: 'Precio y Margen',
+    pcShipping: 'Envío y Logística',
+    pcResults: 'Resultados',
+
+    // PriceCalculator – campos
+    pcModel: 'Modelo',
+    pcCost: 'Costo (USD)',
+    pcTotalSaleQty: 'Cantidad Total de Venta',
+    pcPcsPerBox: 'Pzas por Caja',
+    pcWeightPerBox: 'Peso por Caja (kg)',
+    pcProfitPct: 'Porcentaje de Ganancia (%)',
+    pcTaxPct: 'Porcentaje de Impuesto (%)',
+    pcShippingCostPerKg: 'Costo de Envío por Kg (USD)',
+    pcDeliveryTime: 'Tiempo de Entrega',
+    pcShippingMethod: 'Método de Envío',
+    pcIncoterms: 'Incoterms',
+    pcSelect: 'Seleccionar...',
+
+    // PriceCalculator – resultados
+    pcShippingCostLabel: 'Costo de Envío',
+    pcUnitPrice: 'Precio Unitario',
+    pcGrandTotal: 'Total General',
+    pcTotalProfit: 'Ganancia Total',
+
+    // PriceCalculator – botones / hints
+    pcDownloadPdf: 'Descargar Cotización PDF',
+    pcFillHint: 'Ingresa Costo, Cantidad y Pzas/Caja para ver resultados.',
   },
   en: {
     appTitle: 'Mean Pack',
@@ -114,6 +148,40 @@ const translations = {
     downloadPdf: 'Download PDF',
     downloadError: 'Could not generate the image.',
     downloadPdfError: 'Could not generate the PDF.',
+
+    // Tabs
+    tabBox: 'Box Calculator',
+    tabPrice: 'Price Calculator',
+
+    // PriceCalculator – sections
+    pcProductInfo: 'Product Information',
+    pcPricing: 'Pricing',
+    pcShipping: 'Shipping & Logistics',
+    pcResults: 'Results',
+
+    // PriceCalculator – fields
+    pcModel: 'Model',
+    pcCost: 'Cost (USD)',
+    pcTotalSaleQty: 'Total Sale Quantity',
+    pcPcsPerBox: 'Pcs Per Box',
+    pcWeightPerBox: 'Weight Per Box (kg)',
+    pcProfitPct: 'Profit Percentage (%)',
+    pcTaxPct: 'Tax Percentage (%)',
+    pcShippingCostPerKg: 'Shipping Cost Per Kg (USD)',
+    pcDeliveryTime: 'Delivery Time',
+    pcShippingMethod: 'Shipping Method',
+    pcIncoterms: 'Incoterms',
+    pcSelect: 'Select...',
+
+    // PriceCalculator – results
+    pcShippingCostLabel: 'Shipping Cost',
+    pcUnitPrice: 'Unit Price',
+    pcGrandTotal: 'Grand Total',
+    pcTotalProfit: 'Total Profit',
+
+    // PriceCalculator – buttons / hints
+    pcDownloadPdf: 'Download Quotation PDF',
+    pcFillHint: 'Fill in Cost, Total Sale Quantity and Pcs Per Box to see results.',
   },
 }
 

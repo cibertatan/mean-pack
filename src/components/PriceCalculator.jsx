@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { jsPDF } from 'jspdf'
+import { useLang } from '../i18n'
 
 // ── Company letterhead info ───────────────────────────────────────────────────
 const COMPANY = {
@@ -95,6 +96,7 @@ function ResultRow({ label, value, highlight, big, profit }) {
 }
 
 export default function PriceCalculator() {
+  const { t } = useLang()
   const [form, setForm] = useState({
     model: '',
     cost: '',
@@ -272,9 +274,9 @@ export default function PriceCalculator() {
     <div className="space-y-5">
 
       {/* Product Information */}
-      <Section title="Product Information">
+      <Section title={t('pcProductInfo')}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Field label="Model">
+          <Field label={t('pcModel')}>
             <input
               type="text"
               value={form.model}
@@ -282,7 +284,7 @@ export default function PriceCalculator() {
               placeholder="e.g. RSP-500-24"
             />
           </Field>
-          <Field label="Cost (USD)">
+          <Field label={t('pcCost')}>
             <input
               type="number"
               value={form.cost}
@@ -292,7 +294,7 @@ export default function PriceCalculator() {
               step="0.01"
             />
           </Field>
-          <Field label="Total Sale Quantity">
+          <Field label={t('pcTotalSaleQty')}>
             <input
               type="number"
               value={form.totalSaleQty}
@@ -301,7 +303,7 @@ export default function PriceCalculator() {
               min="0"
             />
           </Field>
-          <Field label="Pcs Per Box">
+          <Field label={t('pcPcsPerBox')}>
             <input
               type="number"
               value={form.pcsPerBox}
@@ -310,7 +312,7 @@ export default function PriceCalculator() {
               min="1"
             />
           </Field>
-          <Field label="Weight Per Box (kg)">
+          <Field label={t('pcWeightPerBox')}>
             <input
               type="number"
               value={form.weightPerBox}
@@ -324,9 +326,9 @@ export default function PriceCalculator() {
       </Section>
 
       {/* Pricing */}
-      <Section title="Pricing">
+      <Section title={t('pcPricing')}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Field label="Profit Percentage (%)">
+          <Field label={t('pcProfitPct')}>
             <input
               type="number"
               value={form.profitPct}
@@ -337,7 +339,7 @@ export default function PriceCalculator() {
               step="0.1"
             />
           </Field>
-          <Field label="Tax Percentage (%)">
+          <Field label={t('pcTaxPct')}>
             <input
               type="number"
               value={form.taxPct}
@@ -352,9 +354,9 @@ export default function PriceCalculator() {
       </Section>
 
       {/* Shipping & Logistics */}
-      <Section title="Shipping & Logistics">
+      <Section title={t('pcShipping')}>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Field label="Shipping Cost Per Kg (USD)">
+          <Field label={t('pcShippingCostPerKg')}>
             <input
               type="number"
               value={form.shippingCostPerKg}
@@ -364,7 +366,7 @@ export default function PriceCalculator() {
               step="0.01"
             />
           </Field>
-          <Field label="Delivery Time">
+          <Field label={t('pcDeliveryTime')}>
             <input
               type="text"
               value={form.deliveryTime}
@@ -372,15 +374,15 @@ export default function PriceCalculator() {
               placeholder="e.g. 15–20 days"
             />
           </Field>
-          <Field label="Shipping Method">
+          <Field label={t('pcShippingMethod')}>
             <select value={form.shippingMethod} onChange={set('shippingMethod')}>
-              <option value="">Select...</option>
+              <option value="">{t('pcSelect')}</option>
               {SHIPPING_METHOD_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
             </select>
           </Field>
-          <Field label="Incoterms">
+          <Field label={t('pcIncoterms')}>
             <select value={form.incoterms} onChange={set('incoterms')}>
-              <option value="">Select...</option>
+              <option value="">{t('pcSelect')}</option>
               {INCOTERMS_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
             </select>
           </Field>
@@ -392,17 +394,17 @@ export default function PriceCalculator() {
         <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-5 space-y-3 shadow-sm">
           <div className="flex items-center gap-2">
             <div className="w-1 h-6 bg-blue-600 rounded-full" />
-            <h3 className="font-semibold text-base sm:text-lg text-gray-800">Results</h3>
+            <h3 className="font-semibold text-base sm:text-lg text-gray-800">{t('pcResults')}</h3>
           </div>
 
           <div className="space-y-2">
-            <ResultRow label="Shipping Cost" value={`$ ${fmt(res.shippingCost)}`} />
+            <ResultRow label={t('pcShippingCostLabel')} value={`$ ${fmt(res.shippingCost)}`} />
             <div className="border-t border-gray-100 pt-2 space-y-2">
-              <ResultRow label="Unit Price" value={`$ ${fmt(res.unitPrice)}`} highlight />
-              <ResultRow label="Grand Total" value={`$ ${fmt(res.grandTotal)}`} big />
+              <ResultRow label={t('pcUnitPrice')} value={`$ ${fmt(res.unitPrice)}`} highlight />
+              <ResultRow label={t('pcGrandTotal')} value={`$ ${fmt(res.grandTotal)}`} big />
             </div>
             <div className="border-t border-gray-100 pt-2">
-              <ResultRow label="Total Profit" value={`$ ${fmt(res.totalProfit)}`} profit />
+              <ResultRow label={t('pcTotalProfit')} value={`$ ${fmt(res.totalProfit)}`} profit />
             </div>
           </div>
 
@@ -413,14 +415,14 @@ export default function PriceCalculator() {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
               <path fillRule="evenodd" d="M4.5 2A1.5 1.5 0 003 3.5v13A1.5 1.5 0 004.5 18h11a1.5 1.5 0 001.5-1.5V7.621a1.5 1.5 0 00-.44-1.06l-4.12-4.122A1.5 1.5 0 0011.378 2H4.5zm2.25 8.5a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5zm0 3a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5z" clipRule="evenodd" />
             </svg>
-            Download Quotation PDF
+            {t('pcDownloadPdf')}
           </button>
         </div>
       )}
 
       {!hasInputs && (
         <p className="text-center text-sm text-gray-400 py-4">
-          Fill in Cost, Total Sale Quantity and Pcs Per Box to see results.
+          {t('pcFillHint')}
         </p>
       )}
     </div>
