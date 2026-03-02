@@ -130,7 +130,8 @@ export default function PriceCalculator() {
     // Load logo from public folder
     let logoDataUrl = null
     try {
-      const resp = await fetch('/logo.png')
+      const resp = await fetch(import.meta.env.BASE_URL + 'logo.jpg')
+      if (!resp.ok) throw new Error('logo not found')
       const blob = await resp.blob()
       logoDataUrl = await new Promise((resolve, reject) => {
         const reader = new FileReader()
@@ -153,7 +154,7 @@ export default function PriceCalculator() {
     const logoX = 12
     const logoY = 5
     if (logoDataUrl) {
-      pdf.addImage(logoDataUrl, 'PNG', logoX, logoY, logoW, logoH)
+      pdf.addImage(logoDataUrl, 'JPEG', logoX, logoY, logoW, logoH)
     }
 
     // Company text to the right of logo
