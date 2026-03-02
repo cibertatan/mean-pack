@@ -190,7 +190,7 @@ const LangContext = createContext()
 export function LangProvider({ children }) {
   const [lang, setLang] = useState(() => {
     try {
-      return localStorage.getItem('mp_lang') || 'es'
+      return localStorage.getItem('mp_lang') || 'en'
     } catch {
       return 'es'
     }
