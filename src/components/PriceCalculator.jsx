@@ -23,7 +23,7 @@ function calcResults(f) {
   const taxPct = parseFloat(f.taxPct) || 0
   const shippingPerKg = parseFloat(f.shippingCostPerKg) || 0
 
-  const totalBoxes = Math.ceil(qty / pcsPerBox)
+  const totalBoxes = qty / pcsPerBox
   const totalWeight = totalBoxes * weightPerBox
   const shippingCost = shippingPerKg * totalWeight
   const shippingPerUnit = qty > 0 ? shippingCost / qty : 0
@@ -164,16 +164,16 @@ export default function PriceCalculator() {
     pdf.setTextColor(30, 30, 30)
     pdf.setFontSize(14)
     pdf.setFont('helvetica', 'bold')
-    pdf.text(COMPANY.name, textX, 14)
+    pdf.text(COMPANY.name, textX, 13)
 
     pdf.setFontSize(8.5)
     pdf.setFont('helvetica', 'normal')
     pdf.setTextColor(120, 120, 120)
-    pdf.text(COMPANY.tagline, textX, 17)
+    pdf.text(COMPANY.tagline, textX, 20)
 
     pdf.setFontSize(7.5)
-    pdf.text(COMPANY.address, textX, 26)
-    pdf.text(`Tel: ${COMPANY.phone}`, textX, 31)
+    pdf.text(COMPANY.address, textX, 27)
+    pdf.text(`Tel: ${COMPANY.phone}`, textX, 32)
 
     // ── Quotation title & date ────────────────────────────────────────
     pdf.setTextColor(30, 64, 175)
@@ -420,6 +420,9 @@ export default function PriceCalculator() {
 
           <div className="space-y-2">
             <div className="border-t border-gray-100 pt-2 space-y-2">
+              {res.totalWeight > 0 && (
+                <ResultRow label="Total Weight" value={`${fmt(res.totalWeight)} kg`} highlight />
+              )}
               <ResultRow label={t('pcUnitPrice')} value={`$ ${fmt(res.unitPrice)}`} highlight />
               {res.shippingToCustomers > 0 && (
                 <ResultRow label="Shipping to Customers" value={`$ ${fmt(res.shippingToCustomers)}`} highlight />
