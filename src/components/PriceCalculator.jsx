@@ -145,54 +145,54 @@ export default function PriceCalculator() {
 
     // White header area with light border bottom
     pdf.setFillColor(255, 255, 255)
-    pdf.rect(0, 0, pageW, 36, 'F')
+    pdf.rect(0, 0, pageW, 46, 'F')
     pdf.setDrawColor(226, 232, 240)
     pdf.setLineWidth(0.5)
-    pdf.line(0, 36, pageW, 36)
+    pdf.line(0, 46, pageW, 46)
 
     // Logo on the left
-    const logoW = 42
-    const logoH = 26
+    const logoW = 52
+    const logoH = 34
     const logoX = 12
-    const logoY = 5
+    const logoY = 6
     if (logoDataUrl) {
       pdf.addImage(logoDataUrl, 'JPEG', logoX, logoY, logoW, logoH)
     }
 
     // Company text to the right of logo
-    const textX = logoX + logoW + 8
+    const textX = logoX + logoW + 10
     pdf.setTextColor(30, 30, 30)
     pdf.setFontSize(14)
     pdf.setFont('helvetica', 'bold')
-    pdf.text(COMPANY.name, textX, 13)
+    pdf.text(COMPANY.name, textX, 16)
 
     pdf.setFontSize(8.5)
     pdf.setFont('helvetica', 'normal')
     pdf.setTextColor(120, 120, 120)
-    pdf.text(COMPANY.tagline, textX, 20)
+    pdf.text(COMPANY.tagline, textX, 24)
 
     pdf.setFontSize(7.5)
-    pdf.text(COMPANY.address, textX, 27)
-    pdf.text(`Tel: ${COMPANY.phone}`, textX, 32)
+    pdf.text(COMPANY.address, textX, 32)
+    pdf.text(`Tel: ${COMPANY.phone}`, textX, 38)
 
     // ── Quotation title & date ────────────────────────────────────────
     pdf.setTextColor(30, 64, 175)
     pdf.setFontSize(15)
     pdf.setFont('helvetica', 'bold')
-    pdf.text('SALES QUOTATION', 14, 50)
+    pdf.text('SALES QUOTATION', 14, 60)
 
     pdf.setTextColor(100, 116, 139)
     pdf.setFontSize(9)
     pdf.setFont('helvetica', 'normal')
-    pdf.text(`Date: ${today}`, 14, 56)
+    pdf.text(`Date: ${today}`, 14, 66)
 
     // ── Divider ───────────────────────────────────────────────────────
     pdf.setDrawColor(226, 232, 240)
     pdf.setLineWidth(0.4)
-    pdf.line(14, 61, pageW - 14, 61)
+    pdf.line(14, 71, pageW - 14, 71)
 
     // ── Body rows ─────────────────────────────────────────────────────
-    let y = 71
+    let y = 81
 
     const labelX = 14
     const valueX = 90
