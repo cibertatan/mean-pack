@@ -12,7 +12,7 @@ const COMPANY = {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const INCOTERMS_OPTIONS = ['EXW', 'FCA', 'CPT', 'CIP', 'DAP', 'DDP', 'FAS', 'FOB', 'CFR', 'CIF']
-const SHIPPING_METHOD_OPTIONS = ['Air', 'Sea', 'Land', 'Express Courier']
+
 
 function calcResults(f) {
   const cost = parseFloat(f.cost) || 0
@@ -32,10 +32,11 @@ function calcResults(f) {
   const unitTax = unitCostWithProfit * (taxPct / 100)
   const unitPrice = unitCostWithProfit + unitTax + shippingPerUnit
 
-  const grandTotal = unitPrice * qty
+  const shippingToCustomers = parseFloat(f.shippingToCustomers) || 0
+  const grandTotal = unitPrice * qty + shippingToCustomers
   const totalProfit = (unitCostWithProfit - cost) * qty
 
-  return { shippingCost, unitPrice, grandTotal, totalProfit, totalWeight, totalBoxes }
+  return { shippingToCustomers, unitPrice, grandTotal, totalProfit, totalWeight, totalBoxes }
 }
 
 function fmt(n, decimals = 2) {
@@ -108,6 +109,7 @@ export default function PriceCalculator() {
     shippingCostPerKg: '',
     deliveryTime: '',
     shippingMethod: '',
+    shippingToCustomers: '',
     incoterms: '',
   })
 
@@ -167,7 +169,7 @@ export default function PriceCalculator() {
     pdf.setFontSize(8.5)
     pdf.setFont('helvetica', 'normal')
     pdf.setTextColor(120, 120, 120)
-    pdf.text(COMPANY.tagline, textX, 20)
+    pdf.text(COMPANY.tagline, textX, 17)
 
     pdf.setFontSize(7.5)
     pdf.text(COMPANY.address, textX, 26)
@@ -200,6 +202,7 @@ export default function PriceCalculator() {
       ['TOTAL SALE QUANTITY', `${fmt(parseInt(form.totalSaleQty) || 0, 0)} units`],
       ['WEIGHT PER BOX', form.weightPerBox ? `${form.weightPerBox} kg` : '—'],
       ['PCS PER BOX', form.pcsPerBox || '—'],
+      ['TOTAL WEIGHT', `${fmt(res.totalWeight)} kg`],
       ['DELIVERY TIME', form.deliveryTime || '—'],
       ['SHIPPING METHOD', form.shippingMethod || '—'],
       ['INCOTERMS', form.incoterms || '—'],
@@ -226,7 +229,7 @@ export default function PriceCalculator() {
 
     const priceRows = [
       { label: 'UNIT PRICE', value: `$ ${fmt(res.unitPrice)}`, big: false },
-      { label: 'SHIPPING COST', value: `$ ${fmt(res.shippingCost)}`, big: false },
+      { label: 'SHIPPING COST', value: `$ ${fmt(res.shippingToCustomers)}`, big: false },
       { label: 'GRAND TOTAL', value: `$ ${fmt(res.grandTotal)}`, big: true },
     ]
 
@@ -381,10 +384,22 @@ export default function PriceCalculator() {
             />
           </Field>
           <Field label={t('pcShippingMethod')}>
-            <select value={form.shippingMethod} onChange={set('shippingMethod')}>
-              <option value="">{t('pcSelect')}</option>
-              {SHIPPING_METHOD_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
-            </select>
+            <input
+              type="text"
+              value={form.shippingMethod}
+              onChange={set('shippingMethod')}
+              placeholder="e.g. Air, Sea, Express Courier"
+            />
+          </Field>
+          <Field label="Shipping to Customers (USD)">
+            <input
+              type="number"
+              value={form.shippingToCustomers}
+              onChange={set('shippingToCustomers')}
+              placeholder="0.00"
+              min="0"
+              step="0.01"
+            />
           </Field>
           <Field label={t('pcIncoterms')}>
             <select value={form.incoterms} onChange={set('incoterms')}>
@@ -404,9 +419,11 @@ export default function PriceCalculator() {
           </div>
 
           <div className="space-y-2">
-            <ResultRow label={t('pcShippingCostLabel')} value={`$ ${fmt(res.shippingCost)}`} />
             <div className="border-t border-gray-100 pt-2 space-y-2">
               <ResultRow label={t('pcUnitPrice')} value={`$ ${fmt(res.unitPrice)}`} highlight />
+              {res.shippingToCustomers > 0 && (
+                <ResultRow label="Shipping to Customers" value={`$ ${fmt(res.shippingToCustomers)}`} highlight />
+              )}
               <ResultRow label={t('pcGrandTotal')} value={`$ ${fmt(res.grandTotal)}`} big />
             </div>
             <div className="border-t border-gray-100 pt-2">
