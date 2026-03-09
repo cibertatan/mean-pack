@@ -6,7 +6,8 @@ import { useLang } from '../i18n'
 const COMPANY = {
   name: 'MEAN WELL',
   tagline: 'POWER SUPPLY',
-  address: '9675 NW 174th ST Suite 400, Miami, Florida, 33018, U.S.A.',
+  address1: '9675 NW 174th ST Suite 400,',
+  address2: 'Miami, Florida, 33018, U.S.A.',
   phone: '+1-305-432-1030',
 }
 // ─────────────────────────────────────────────────────────────────────────────
@@ -146,54 +147,57 @@ export default function PriceCalculator() {
 
     // White header area with light border bottom
     pdf.setFillColor(255, 255, 255)
-    pdf.rect(0, 0, pageW, 46, 'F')
+    pdf.rect(0, 0, pageW, 55, 'F')
     pdf.setDrawColor(226, 232, 240)
     pdf.setLineWidth(0.5)
-    pdf.line(0, 46, pageW, 46)
+    pdf.line(0, 55, pageW, 55)
 
     // Logo on the left
-    const logoW = 52
-    const logoH = 34
+    const logoW = 58
+    const logoH = 40
     const logoX = 12
-    const logoY = 6
+    const logoY = 7
     if (logoDataUrl) {
       pdf.addImage(logoDataUrl, 'JPEG', logoX, logoY, logoW, logoH)
     }
 
     // Company text to the right of logo
-    const textX = logoX + logoW + 10
-    pdf.setTextColor(30, 30, 30)
-    pdf.setFontSize(14)
+    const textX = logoX + logoW + 12
+    pdf.setTextColor(20, 20, 20)
+    pdf.setFontSize(20)
     pdf.setFont('helvetica', 'bold')
-    pdf.text(COMPANY.name, textX, 16)
+    pdf.text(COMPANY.name, textX, 20)
 
-    pdf.setFontSize(8.5)
+    pdf.setFontSize(13)
+    pdf.setFont('helvetica', 'bold')
+    pdf.setTextColor(20, 20, 20)
+    pdf.text(COMPANY.tagline, textX, 29)
+
+    pdf.setFontSize(9)
     pdf.setFont('helvetica', 'normal')
-    pdf.setTextColor(120, 120, 120)
-    pdf.text(COMPANY.tagline, textX, 24)
-
-    pdf.setFontSize(7.5)
-    pdf.text(COMPANY.address, textX, 32)
-    pdf.text(`Tel: ${COMPANY.phone}`, textX, 38)
+    pdf.setTextColor(90, 90, 90)
+    pdf.text(COMPANY.address1, textX, 39)
+    pdf.text(COMPANY.address2, textX, 45)
+    pdf.text(`Tel: ${COMPANY.phone}`, textX, 51)
 
     // ── Quotation title & date ────────────────────────────────────────
     pdf.setTextColor(30, 64, 175)
     pdf.setFontSize(15)
     pdf.setFont('helvetica', 'bold')
-    pdf.text('SALES QUOTATION', 14, 60)
+    pdf.text('SALES QUOTATION', 14, 68)
 
     pdf.setTextColor(100, 116, 139)
     pdf.setFontSize(9)
     pdf.setFont('helvetica', 'normal')
-    pdf.text(`Date: ${today}`, 14, 66)
+    pdf.text(`Date: ${today}`, 14, 74)
 
     // ── Divider ───────────────────────────────────────────────────────
     pdf.setDrawColor(226, 232, 240)
     pdf.setLineWidth(0.4)
-    pdf.line(14, 71, pageW - 14, 71)
+    pdf.line(14, 79, pageW - 14, 79)
 
     // ── Body rows ─────────────────────────────────────────────────────
-    let y = 81
+    let y = 89
 
     const labelX = 14
     const valueX = 90
