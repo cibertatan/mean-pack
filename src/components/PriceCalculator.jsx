@@ -271,7 +271,7 @@ export default function PriceCalculator() {
       { align: 'center' },
     )
     pdf.text(
-      `Thank you for your business — ${COMPANY.name}`,
+      `Thank you for your business — ${COMPANY.name} ${COMPANY.tagline}`,
       pageW / 2,
       footerY + 5,
       { align: 'center' },
