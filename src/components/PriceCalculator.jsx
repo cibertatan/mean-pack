@@ -33,10 +33,11 @@ function calcResults(f) {
   const unitPrice = unitCostWithProfit + unitTax + shippingPerUnit
 
   const shippingToCustomers = parseFloat(f.shippingToCustomers) || 0
-  const grandTotal = unitPrice * qty + shippingToCustomers
+  const subtotal = unitPrice * qty
+  const grandTotal = subtotal + shippingToCustomers
   const totalProfit = (unitCostWithProfit - cost) * qty
 
-  return { shippingToCustomers, unitPrice, grandTotal, totalProfit, totalWeight, totalBoxes }
+  return { shippingToCustomers, unitPrice, subtotal, grandTotal, totalProfit, totalWeight, totalBoxes }
 }
 
 function fmt(n, decimals = 2) {
@@ -229,6 +230,7 @@ export default function PriceCalculator() {
 
     const priceRows = [
       { label: 'UNIT PRICE', value: `$ ${fmt(res.unitPrice)}`, big: false },
+      { label: 'SUBTOTAL', value: `$ ${fmt(res.subtotal)}`, big: false },
       { label: 'SHIPPING COST', value: `$ ${fmt(res.shippingToCustomers)}`, big: false },
       { label: 'GRAND TOTAL', value: `$ ${fmt(res.grandTotal)}`, big: true },
     ]
