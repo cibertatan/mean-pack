@@ -147,10 +147,10 @@ export default function PriceCalculator() {
 
     // White header area with light border bottom
     pdf.setFillColor(255, 255, 255)
-    pdf.rect(0, 0, pageW, 55, 'F')
+    pdf.rect(0, 0, pageW, 38, 'F')
     pdf.setDrawColor(226, 232, 240)
     pdf.setLineWidth(0.5)
-    pdf.line(0, 55, pageW, 55)
+    pdf.line(0, 38, pageW, 38)
 
     // Logo on the left
     const logoW = 44
@@ -184,20 +184,20 @@ export default function PriceCalculator() {
     pdf.setTextColor(30, 64, 175)
     pdf.setFontSize(15)
     pdf.setFont('helvetica', 'bold')
-    pdf.text('SALES QUOTATION', 14, 62)
+    pdf.text('SALES QUOTATION', 14, 52)
 
     pdf.setTextColor(100, 116, 139)
     pdf.setFontSize(9)
     pdf.setFont('helvetica', 'normal')
-    pdf.text(`Date: ${today}`, 14, 68)
+    pdf.text(`Date: ${today}`, 14, 58)
 
     // ── Divider ───────────────────────────────────────────────────────
     pdf.setDrawColor(226, 232, 240)
     pdf.setLineWidth(0.4)
-    pdf.line(14, 73, pageW - 14, 73)
+    pdf.line(14, 63, pageW - 14, 63)
 
     // ── Body rows ─────────────────────────────────────────────────────
-    let y = 83
+    let y = 73
 
     const labelX = 14
     const valueX = 90
