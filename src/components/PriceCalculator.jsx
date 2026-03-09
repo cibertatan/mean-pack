@@ -153,51 +153,51 @@ export default function PriceCalculator() {
     pdf.line(0, 55, pageW, 55)
 
     // Logo on the left
-    const logoW = 58
-    const logoH = 40
+    const logoW = 44
+    const logoH = 25
     const logoX = 12
-    const logoY = 7
+    const logoY = 9
     if (logoDataUrl) {
       pdf.addImage(logoDataUrl, 'JPEG', logoX, logoY, logoW, logoH)
     }
 
     // Company text to the right of logo
-    const textX = logoX + logoW + 12
+    const textX = logoX + logoW + 5
     pdf.setTextColor(20, 20, 20)
     pdf.setFontSize(20)
     pdf.setFont('helvetica', 'bold')
-    pdf.text(COMPANY.name, textX, 20)
+    pdf.text(COMPANY.name, textX, 15)
 
     pdf.setFontSize(13)
     pdf.setFont('helvetica', 'bold')
     pdf.setTextColor(20, 20, 20)
-    pdf.text(COMPANY.tagline, textX, 29)
+    pdf.text(COMPANY.tagline, textX, 20)
 
     pdf.setFontSize(9)
     pdf.setFont('helvetica', 'normal')
     pdf.setTextColor(90, 90, 90)
-    pdf.text(COMPANY.address1, textX, 39)
-    pdf.text(COMPANY.address2, textX, 45)
-    pdf.text(`Tel: ${COMPANY.phone}`, textX, 51)
+    pdf.text(COMPANY.address1, textX, 25)
+    pdf.text(COMPANY.address2, textX, 29)
+    pdf.text(`Tel: ${COMPANY.phone}`, textX, 33)
 
     // ── Quotation title & date ────────────────────────────────────────
     pdf.setTextColor(30, 64, 175)
     pdf.setFontSize(15)
     pdf.setFont('helvetica', 'bold')
-    pdf.text('SALES QUOTATION', 14, 68)
+    pdf.text('SALES QUOTATION', 14, 62)
 
     pdf.setTextColor(100, 116, 139)
     pdf.setFontSize(9)
     pdf.setFont('helvetica', 'normal')
-    pdf.text(`Date: ${today}`, 14, 74)
+    pdf.text(`Date: ${today}`, 14, 68)
 
     // ── Divider ───────────────────────────────────────────────────────
     pdf.setDrawColor(226, 232, 240)
     pdf.setLineWidth(0.4)
-    pdf.line(14, 79, pageW - 14, 79)
+    pdf.line(14, 73, pageW - 14, 73)
 
     // ── Body rows ─────────────────────────────────────────────────────
-    let y = 89
+    let y = 83
 
     const labelX = 14
     const valueX = 90
